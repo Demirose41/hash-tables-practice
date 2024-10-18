@@ -19,7 +19,6 @@ class HashTable {
   hash(key) {
     let shaKey = sha256(key).slice(0,8);
 
-    
     return Number('0x' + shaKey);
   }
 
@@ -28,7 +27,10 @@ class HashTable {
   }
 
   insertNoCollisions(key, value) {
-    // Your code here
+    let idx = this.hashMod(key);
+    if(this.data[idx]) throw new Error('hash collision or same key/value pair already exists!')
+    this.data[idx] = {key: key, value: value};
+    this.count++;
   }
 
   insertWithHashCollisions(key, value) {
