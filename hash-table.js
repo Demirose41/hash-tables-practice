@@ -46,10 +46,29 @@ class HashTable {
   }
 
   insert(key, value) {
-    // Your code here
-  }
+    let idx = this.hashMod(key)
+    let newPair = new KeyValuePair(key, value);
+    if(this.data[idx]){
+      let node = this.data[idx];
+      // check for existing nodes with same key
+      while(node){
+        if(node.key === key){
+          // update if found
+          node.value = value;
+          return;
+        }
+        node = node.next;
+      }
+      newPair.next = this.data[idx];
+      this.data[idx] = newPair
+      this.count++
+    }else{
+      this.data[idx] = newPair
+      this.count++;
+    }
+
+  } 
 
 }
-
 
 module.exports = HashTable;
